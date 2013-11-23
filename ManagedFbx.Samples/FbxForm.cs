@@ -35,7 +35,7 @@ public partial class FbxForm : Form
 		if(node == null)
 			return;
 
-		var builder = new StringBuilder();
+        var builder = new StringBuilder(40000);
 
 		Action NewLine = () => builder.Append(Environment.NewLine);
 
