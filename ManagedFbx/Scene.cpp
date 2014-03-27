@@ -123,9 +123,7 @@ void Scene::BakeTransform(SceneNode ^node)
 		native->GetGeometricRotation(FbxNode::eSourcePivot),
 		native->GetGeometricScaling(FbxNode::eSourcePivot));
 
-	auto total = //m_nativeScene->
-		//FbxScene::
-		Manager::GetInstance()->GetAnimationEvaluator()->GetNodeGlobalTransform(native) * geometry;
+	auto total = m_nativeScene->GetAnimationEvaluator()->GetNodeGlobalTransform(native) * geometry;
 
 	for(int i = 0; i < mesh->GetControlPointsCount(); i++)
 	{
