@@ -14,6 +14,8 @@ namespace ManagedFbx
 	public ref class SceneNode
 	{
 	public:
+		SceneNode(string^ name, SceneNode^ parent);
+
 		/// <summary>
 		/// Gets and sets the name of this node.
 		/// </summary>

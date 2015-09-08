@@ -2,6 +2,7 @@
 #include "SceneNode.h"
 
 using namespace ManagedFbx;
+using namespace System::Runtime::InteropServices;
 
 SceneNode::SceneNode(FbxNode *node)
 {
@@ -21,6 +22,10 @@ SceneNode::SceneNode(FbxNode *node)
 		auto attr = m_nativeNode->GetNodeAttributeByIndex(i);
 		m_attributes->Add(gcnew NodeAttribute(attr));
 	}
+}
+
+SceneNode::SceneNode(string^ name, SceneNode^ parent) : SceneNode(FbxNode::Create(parent->m_nativeNode, (const char*)Marshal::StringToHGlobalAnsi(name).ToPointer()))
+{
 }
 
 IEnumerable<SceneNode^>^ SceneNode::ChildNodes::get()

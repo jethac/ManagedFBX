@@ -3,10 +3,14 @@
 #include "Manager.h"
 
 using namespace ManagedFbx;
+using namespace System::Runtime::InteropServices;
 
 Mesh::Mesh(FbxMesh *nativeMesh)
 {
 	m_nativeMesh = nativeMesh;
+}
+Mesh::Mesh(string^ name, SceneNode^ container) : Mesh(FbxMesh::Create(container->m_nativeNode, (const char*)Marshal::StringToHGlobalAnsi(name).ToPointer()))
+{
 }
 
 Mesh ^Mesh::Triangulate()

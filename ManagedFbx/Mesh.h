@@ -4,9 +4,12 @@
 
 namespace ManagedFbx
 {
+	ref class SceneNode;
 	public ref class Mesh
 	{
 	public:
+		Mesh(string^ name, SceneNode^ container);
+
 		property_r(array<Polygon>^, Polygons);
 		property_r(array<Vector3>^, Vertices);
 		property_r(array<Vector3>^, Normals);
