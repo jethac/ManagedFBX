@@ -11,6 +11,8 @@ Mesh::Mesh(FbxMesh *nativeMesh)
 }
 Mesh::Mesh(string^ name, SceneNode^ container) : Mesh(FbxMesh::Create(container->m_nativeNode, (const char*)Marshal::StringToHGlobalAnsi(name).ToPointer()))
 {
+	// Create an empty default layer
+	m_nativeMesh->CreateLayer();
 }
 
 Mesh ^Mesh::Triangulate()
@@ -45,6 +47,23 @@ array<ManagedFbx::Polygon> ^Mesh::Polygons::get()
 
 	return list;
 }
+void Mesh::Polygons::set(array<ManagedFbx::Polygon>^ value)
+{
+	for (int i = m_nativeMesh->GetPolygonCount() - 1; i >= 0; i--)
+	{
+		m_nativeMesh->RemovePolygon(i);
+	}
+	m_nativeMesh->ReservePolygonCount(value->Length);
+	for each (Polygon p in value)
+	{
+		m_nativeMesh->BeginPolygon(0);
+		for each (int idx in p.Indices)
+		{
+			m_nativeMesh->AddPolygon(idx);
+		}
+		m_nativeMesh->EndPolygon();
+	}
+}
 
 array<Vector3> ^Mesh::Vertices::get()
 {
@@ -59,6 +78,19 @@ array<Vector3> ^Mesh::Vertices::get()
 
 	return list;
 }
+void Mesh::Vertices::set(array<Vector3>^ value)
+{
+	m_nativeMesh->InitControlPoints(value->Length);
+	auto pts = m_nativeMesh->GetControlPoints();
+	for (int i = 0; i < value->Length; i++)
+	{
+		pts[i] = FbxVector4(
+			value[i].X,
+			value[i].Y,
+			value[i].Z,
+			1.0);
+	}
+}
 
 array<Vector3> ^Mesh::Normals::get()
 {
@@ -70,6 +102,25 @@ array<Vector3> ^Mesh::Normals::get()
 		list[i] = Vector3(normals->GetDirectArray().GetAt(i));
 
 	return list;
+}
+
+void Mesh::Normals::set(array<Vector3>^ value)
+{
+	auto normals = m_nativeMesh->GetLayer(0)->GetNormals();
+	if (normals == NULL)
+	{
+		normals = m_nativeMesh->CreateElementNormal();
+	}
+	normals->GetDirectArray().Clear();
+	normals->GetDirectArray().Resize(value->Length);
+	for (int i = 0; i < value->Length; i++)
+	{
+		normals->GetDirectArray().Add(FbxVector4(
+			value[i].X,
+			value[i].Y,
+			value[i].Z,
+			1.0));
+	}
 }
 
 array<Vector2> ^Mesh::TextureCoords::get()

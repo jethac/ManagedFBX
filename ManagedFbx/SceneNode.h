@@ -49,7 +49,7 @@ namespace ManagedFbx
 		/// <summary>
 		/// Gets the first mesh attribute of this node if it exists, otherwise null.
 		/// </summary>
-		property_r(ManagedFbx::Mesh^, Mesh);
+		property_rw(ManagedFbx::Mesh^, Mesh);
 
 		/// <summary>
 		/// Gets the first light attribute of this node if it exists, otherwise null.

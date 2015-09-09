@@ -88,6 +88,10 @@ Mesh ^SceneNode::Mesh::get()
 {
 	return gcnew ManagedFbx::Mesh(m_nativeNode->GetMesh());
 }
+void SceneNode::Mesh::set(ManagedFbx::Mesh^ value)
+{
+	m_nativeNode->AddNodeAttribute(value->m_nativeMesh);
+}
 
 Light ^SceneNode::Light::get()
 {

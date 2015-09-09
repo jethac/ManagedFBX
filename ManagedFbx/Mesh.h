@@ -10,9 +10,9 @@ namespace ManagedFbx
 	public:
 		Mesh(string^ name, SceneNode^ container);
 
-		property_r(array<Polygon>^, Polygons);
-		property_r(array<Vector3>^, Vertices);
-		property_r(array<Vector3>^, Normals);
+		property_rw(array<Polygon>^, Polygons);
+		property_rw(array<Vector3>^, Vertices);
+		property_rw(array<Vector3>^, Normals);
 		property_r(array<Vector2>^, TextureCoords);
 		property_r(array<Colour>^, VertexColours);
 		property_r(array<int>^, MaterialIDs);
@@ -27,8 +27,6 @@ namespace ManagedFbx
 
 	internal:
 		Mesh(FbxMesh *nativeMesh);
-
-	private:
 		FbxMesh *m_nativeMesh;
 	};
 }

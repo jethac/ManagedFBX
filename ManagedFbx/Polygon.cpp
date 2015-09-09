@@ -3,6 +3,10 @@
 
 using namespace ManagedFbx;
 
+Polygon::Polygon(array<int>^ indices) : m_indices(indices)
+{
+}
+
 array<int> ^Polygon::Indices::get()
 {
 	return m_indices;

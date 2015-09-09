@@ -8,10 +8,12 @@ namespace ManagedFbx
 	public value struct Polygon
 	{
 	public:
+		Polygon(array<int>^ indices);
+
 		/// <summary>
 		/// Gets the array of indices which make up this polygon.
 		/// </summary>
-		property_ri(array<int>^, Indices);
+		property_rw(array<int>^, Indices);
 
 	private:
 		array<int>^ m_indices;
